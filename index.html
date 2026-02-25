@@ -1,0 +1,2735 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jack Zhu · 朱佳科</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F5F0E8;
+      --warm-white: #FAFAF5;
+      --olive: #4A5240;
+      --olive-light: #6B7260;
+      --olive-dark: #2E3328;
+      --sage: #8A9580;
+      --sage-light: #C5CEBC;
+      --terracotta: #C07A5A;
+      --gold: #B8975A;
+      --text: #2A2A24;
+      --text-muted: #6B6B60;
+      --border: rgba(74, 82, 64, 0.15);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--warm-white);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 400;
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+
+    /* ─── NOISE TEXTURE OVERLAY ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.4;
+    }
+
+    /* ─── SECTION FLOW ─── */
+    .section-flow {
+      position: relative;
+    }
+
+    .section-flow::after {
+      content: '';
+      display: block;
+      height: 80px;
+      background: linear-gradient(to bottom, var(--warm-white), transparent);
+      margin-bottom: -40px;
+      pointer-events: none;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ─── LANGUAGE SWITCHER ─── */
+    #lang-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 999;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 48px;
+      background: rgba(245, 240, 232, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo-mark {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--olive-dark);
+      letter-spacing: -0.01em;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .logo-mark:hover {
+      color: var(--olive);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+
+    .nav-link {
+      padding: 6px 14px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: var(--text-muted);
+      text-decoration: none;
+      border-radius: 20px;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .nav-link:hover {
+      color: var(--olive-dark);
+      background: rgba(74, 82, 64, 0.07);
+    }
+
+    .nav-link.active-section {
+      color: var(--olive-dark);
+      font-weight: 500;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .hamburger {
+      display: none;
+    }
+
+    #mobile-menu {
+      display: none;
+    }
+
+    .mobile-lang {
+      display: none;
+    }
+
+    .lang-switcher {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .lang-btn {
+      background: none;
+      border: 1px solid transparent;
+      padding: 5px 14px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-radius: 20px;
+      transition: all 0.25s ease;
+    }
+
+    .lang-btn:hover {
+      color: var(--olive);
+      border-color: var(--border);
+    }
+
+    .lang-btn.active {
+      background: var(--olive);
+      color: var(--cream);
+      border-color: var(--olive);
+    }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 72px 1fr 1fr;
+      padding-top: 80px;
+    }
+
+    /* ─── SIDEBAR SOCIALS ─── */
+    .hero-sidebar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 0;
+      border-right: 1px solid var(--border);
+      background: var(--cream);
+      gap: 16px;
+      position: sticky;
+      top: 80px;
+      height: calc(100vh - 80px);
+    }
+
+    .hero-sidebar .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      color: var(--olive-light);
+      text-decoration: none;
+      font-size: 1rem;
+      transition: all 0.25s ease;
+      background: var(--warm-white);
+    }
+
+    .hero-sidebar .social-link:hover {
+      background: var(--olive);
+      color: var(--cream);
+      border-color: var(--olive);
+      transform: translateX(3px);
+    }
+
+    .hero-sidebar .wechat-wrapper .wechat-tooltip {
+      left: 52px;
+      bottom: 50%;
+      transform: translateY(50%);
+    }
+
+    .hero-sidebar .wechat-wrapper .wechat-tooltip::after {
+      top: 50%;
+      left: -6px;
+      transform: translateY(-50%);
+      border: 6px solid transparent;
+      border-right-color: var(--border);
+      border-top-color: transparent;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 56px 80px 64px;
+    }
+
+    h1 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(3.2rem, 5.5vw, 5.6rem);
+      font-weight: 800;
+      line-height: 1.02;
+      color: var(--olive-dark);
+      margin-bottom: 16px;
+      letter-spacing: -0.03em;
+    }
+
+    .hero-subtitle {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(1.1rem, 2vw, 1.4rem);
+      font-style: normal;
+      font-weight: 600;
+      color: var(--olive);
+      margin-bottom: 32px;
+      letter-spacing: 0.01em;
+    }
+
+    .hero-tagline {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin-bottom: 0;
+      line-height: 1.9;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      color: var(--olive-light);
+      text-decoration: none;
+      font-size: 1rem;
+      transition: all 0.25s ease;
+      background: var(--cream);
+    }
+
+    .social-link:hover {
+      background: var(--olive);
+      color: var(--cream);
+      border-color: var(--olive);
+      transform: translateY(-2px);
+    }
+
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+      background: var(--cream);
+    }
+
+    .hero-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center center;
+      background: var(--cream);
+      display: block;
+    }
+
+    .hero-photo-placeholder {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(160deg, var(--sage-light) 0%, var(--olive-light) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 8rem;
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    .hero-scroll-hint {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      animation: float 2.5s ease-in-out infinite;
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateX(-50%) translateY(0);
+      }
+
+      50% {
+        transform: translateX(-50%) translateY(-6px);
+      }
+    }
+
+    /* ─── SECTIONS ─── */
+    section {
+      padding: 56px 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.78rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--olive-dark);
+      background: transparent;
+      padding: 0 0 0 14px;
+      border-radius: 0;
+      margin-bottom: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 800;
+      border-left: 4px solid var(--gold);
+    }
+
+    .section-label::after {
+      content: none;
+    }
+
+    h2 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(2.6rem, 4.5vw, 4rem);
+      font-weight: 800;
+      color: var(--olive-dark);
+      margin-bottom: 32px;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+    }
+
+    /* ─── ABOUT ─── */
+    #about {
+      background: var(--warm-white);
+      max-width: 100%;
+      padding: 56px 0;
+    }
+
+    .about-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      font-size: 1rem;
+      line-height: 1.9;
+    }
+
+    .about-text p strong {
+      color: var(--olive);
+      font-weight: 500;
+    }
+
+    .about-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 32px;
+    }
+
+    .pill {
+      padding: 6px 16px;
+      border: 1px solid var(--sage-light);
+      border-radius: 20px;
+      font-size: 0.8rem;
+      color: var(--olive);
+      background: var(--warm-white);
+      letter-spacing: 0.03em;
+    }
+
+    .about-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .stat-card {
+      background: var(--warm-white);
+      border-bottom: 1px solid var(--border);
+      border-radius: 0;
+      padding: 32px 32px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      transition: background 0.2s ease;
+    }
+
+    .stat-card:last-child {
+      border-bottom: none;
+    }
+
+    .stat-card:hover {
+      background: var(--cream);
+    }
+
+    .stat-number {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 3.2rem;
+      font-weight: 700;
+      color: var(--olive-dark);
+      line-height: 1;
+      flex-shrink: 0;
+      width: 84px;
+    }
+
+    .stat-label {
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: var(--text-dark);
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      letter-spacing: 0.02em;
+      flex: 1;
+    }
+
+    /* ─── EDUCATION ─── */
+    .timeline {
+      position: relative;
+      padding-left: 32px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      bottom: 8px;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--olive), transparent);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 48px;
+      opacity: 1;
+      transform: translateY(0);
+      transition: all 0.5s ease;
+    }
+
+    .timeline-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -37px;
+      top: 8px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--gold);
+      border: 2px solid var(--cream);
+      box-shadow: 0 0 0 3px var(--sage-light);
+    }
+
+    .timeline-date {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    .timeline-school {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--olive-dark);
+      margin-bottom: 4px;
+    }
+
+    .timeline-degree {
+      font-size: 0.9rem;
+      color: var(--olive-light);
+      margin-bottom: 8px;
+      font-weight: 400;
+    }
+
+    .timeline-badge {
+      display: inline-block;
+      padding: 3px 12px;
+      background: rgba(184, 151, 90, 0.12);
+      border: 1px solid rgba(184, 151, 90, 0.3);
+      border-radius: 20px;
+      font-size: 0.72rem;
+      color: var(--gold);
+      margin-bottom: 10px;
+      letter-spacing: 0.05em;
+    }
+
+    .timeline-courses {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    .about-right-col {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      justify-content: center;
+      min-height: 100%;
+    }
+
+    /* ─── EDUCATION CARD GRID ─── */
+    #education {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .edu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .edu-school-icon {
+      font-size: 2rem;
+      line-height: 1;
+      margin-bottom: 2px;
+    }
+
+    .edu-card {
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .edu-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(to right, var(--olive), var(--gold));
+    }
+
+    .edu-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(74, 82, 64, 0.1);
+      border-color: var(--sage-light);
+    }
+
+    .edu-period {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .edu-school {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--olive-dark);
+      line-height: 1.3;
+    }
+
+    .edu-degree {
+      font-size: 0.88rem;
+      color: var(--olive-light);
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    .edu-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .edu-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      background: rgba(184, 151, 90, 0.1);
+      border: 1px solid rgba(184, 151, 90, 0.25);
+      border-radius: 20px;
+      font-size: 0.68rem;
+      color: var(--gold);
+      letter-spacing: 0.04em;
+      font-weight: 600;
+    }
+
+    .edu-courses {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-top: auto;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+    }
+
+    .company-logo {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      object-fit: contain;
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      padding: 2px;
+      flex-shrink: 0;
+    }
+
+    /* ─── EXPERIENCE ─── */
+    #experience {
+      background: var(--warm-white);
+      max-width: 100%;
+      padding: 56px 0;
+    }
+
+    .experience-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 56px 80px;
+    }
+
+    .exp-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+
+    .exp-card {
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      transition: transform 0.4s ease, box-shadow 0.3s ease;
+      opacity: 1;
+      transform: translateY(0);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .exp-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .exp-card:hover {
+      border-color: var(--sage);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(74, 82, 64, 0.08);
+    }
+
+    .exp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+      gap: 12px;
+    }
+
+    .exp-company {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--olive-dark);
+    }
+
+    .exp-period {
+      font-size: 0.72rem;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+      padding-top: 3px;
+      font-weight: 500;
+    }
+
+    .exp-role {
+      font-size: 0.9rem;
+      color: var(--olive-light);
+      margin-bottom: 16px;
+      font-weight: 500;
+      font-style: normal;
+    }
+
+    .exp-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .exp-bullets li {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      padding-left: 16px;
+      position: relative;
+      line-height: 1.65;
+    }
+
+    .exp-bullets li::before {
+      content: '·';
+      position: absolute;
+      left: 0;
+      color: var(--sage);
+      font-size: 1.2rem;
+      line-height: 1.4;
+    }
+
+    /* ─── PROJECTS ─── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      margin-top: 24px;
+    }
+
+    .project-card {
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      background: var(--cream);
+      transition: transform 0.4s ease, box-shadow 0.3s ease;
+      opacity: 1;
+      transform: translateY(0);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .project-card:hover {
+      box-shadow: 0 16px 48px rgba(74, 82, 64, 0.1);
+      transform: translateY(-6px);
+    }
+
+    .project-header {
+      padding: 40px 40px 0;
+      background: linear-gradient(135deg, var(--olive-dark) 0%, var(--olive) 100%);
+      color: var(--cream);
+      padding-bottom: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-header::after {
+      content: '⬡';
+      position: absolute;
+      right: -20px;
+      top: -20px;
+      font-size: 8rem;
+      opacity: 0.07;
+      color: var(--cream);
+    }
+
+    .project-name {
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+
+    .project-tagline {
+      font-size: 0.88rem;
+      opacity: 0.75;
+      line-height: 1.6;
+      max-width: 480px;
+    }
+
+    .project-body {
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .project-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 24px;
+      flex: 1;
+    }
+
+    .project-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .feature-tag {
+      padding: 5px 14px;
+      background: rgba(74, 82, 64, 0.07);
+      border-radius: 20px;
+      font-size: 0.78rem;
+      color: var(--olive);
+    }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: var(--olive);
+      color: var(--cream);
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      transition: all 0.2s ease;
+    }
+
+    .project-link:hover {
+      background: var(--olive-dark);
+      transform: translateX(4px);
+    }
+
+    /* ─── EDUCATION CARD GRID ─── */
+    transform: scaleX(1);
+    }
+
+    /* ─── LIFE ─── */
+    #life {
+      background: var(--warm-white);
+      max-width: 100%;
+      padding: 56px 0;
+    }
+
+    .life-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 80px;
+    }
+
+    .life-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .life-card {
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      padding: 32px;
+      transition: all 0.3s ease;
+    }
+
+    .life-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .life-icon {
+      font-size: 2rem;
+    }
+
+    .life-card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--olive-dark);
+      margin-bottom: 0;
+    }
+
+    .life-card-text {
+      font-size: 0.93rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+    }
+
+    .travel-map {
+      background: linear-gradient(135deg, var(--olive-dark), var(--olive));
+      color: var(--cream);
+      padding: 40px;
+      border-radius: 16px;
+      margin-top: 40px;
+      display: flex;
+      align-items: center;
+      gap: 48px;
+    }
+
+    .travel-number {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 5rem;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--cream);
+    }
+
+    .travel-text h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .travel-text p {
+      font-size: 0.88rem;
+      opacity: 0.7;
+      line-height: 1.6;
+    }
+
+    .flags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .flag {
+      font-size: 1.4rem;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--olive-dark);
+      color: var(--cream);
+      padding: 64px 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 32px;
+    }
+
+    .footer-name {
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+
+    .footer-tagline {
+      font-size: 0.82rem;
+      opacity: 0.5;
+      letter-spacing: 0.1em;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 14px;
+    }
+
+    .footer-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgba(245, 240, 232, 0.2);
+      border-radius: 50%;
+      color: rgba(245, 240, 232, 0.6);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+    }
+
+    .footer-link:hover {
+      background: rgba(245, 240, 232, 0.1);
+      color: var(--cream);
+      border-color: rgba(245, 240, 232, 0.4);
+    }
+
+    /* ─── WECHAT TOOLTIP ─── */
+    .wechat-wrapper {
+      position: relative;
+    }
+
+    .wechat-tooltip {
+      position: absolute;
+      bottom: 52px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-size: 0.78rem;
+      color: var(--text);
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .wechat-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-top-color: var(--border);
+    }
+
+    .wechat-wrapper:hover .wechat-tooltip {
+      opacity: 1;
+    }
+
+    /* ─── LIFE CARD CLICKABLE ─── */
+    .life-card-clickable {
+      cursor: pointer;
+      position: relative;
+    }
+
+    .life-card-clickable:hover {
+      border-color: var(--olive);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(74, 82, 64, 0.1);
+    }
+
+    .life-card-cta {
+      margin-top: 12px;
+      font-size: 0.8rem;
+      color: var(--olive);
+      font-weight: 500;
+      letter-spacing: 0.05em;
+    }
+
+    /* ─── MODAL OVERLAY ─── */
+    #modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(30, 30, 24, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 1100;
+    }
+
+    #modal-overlay.open {
+      display: block;
+    }
+
+    /* ─── LIFE MODAL ─── */
+    .life-modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.95);
+      width: 90%;
+      max-width: 780px;
+      max-height: 80vh;
+      background: var(--warm-white);
+      border-radius: 20px;
+      z-index: 1200;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.2);
+      transition: transform 0.25s ease, opacity 0.25s ease;
+      opacity: 0;
+    }
+
+    .life-modal.open {
+      display: flex;
+      flex-direction: column;
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 32px;
+      border-bottom: 1px solid var(--border);
+      background: var(--cream);
+      flex-shrink: 0;
+    }
+
+    .modal-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--olive-dark);
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .modal-close:hover {
+      background: var(--border);
+      color: var(--olive-dark);
+    }
+
+    .modal-body {
+      overflow-y: auto;
+      padding: 28px 32px 32px;
+      flex: 1;
+    }
+
+    .modal-section-title {
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 16px;
+      font-weight: 500;
+    }
+
+    /* ─── MEDIA GRID (films/books) ─── */
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 16px;
+    }
+
+    .media-card {
+      border-radius: 10px;
+      overflow: hidden;
+      background: var(--cream);
+      border: 1px solid var(--border);
+      transition: transform 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .media-card:hover {
+      transform: translateY(-3px);
+    }
+
+    .media-card.featured {
+      border-color: var(--gold);
+      box-shadow: 0 4px 16px rgba(184, 151, 90, 0.2);
+    }
+
+    .media-card img {
+      width: 100%;
+      aspect-ratio: 2/3;
+      object-fit: cover;
+      display: block;
+    }
+
+    .media-info {
+      padding: 8px 10px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    .media-title {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--olive-dark);
+      line-height: 1.3;
+    }
+
+    .media-tag {
+      font-size: 0.65rem;
+      color: var(--gold);
+      margin-top: 3px;
+    }
+
+    /* ─── PHOTO GRID (travel/sport) ─── */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px;
+    }
+
+    .photo-grid img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .photo-grid img:hover {
+      transform: scale(1.02);
+    }
+
+    .photo-placeholder {
+      grid-column: 1 / -1;
+      padding: 48px 24px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      font-style: italic;
+      border: 2px dashed var(--border);
+      border-radius: 12px;
+    }
+
+    /* ─── PODCAST LIST ─── */
+    .podcast-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .podcast-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 14px 16px;
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    .podcast-icon {
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    .podcast-name {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--olive-dark);
+      margin-bottom: 3px;
+    }
+
+    .podcast-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* ─── DIVIDER ─── */
+    .divider {
+      display: none;
+    }
+
+    /* ─── SCROLL ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+
+    .animate-on-scroll.visible {
+      animation: fadeUp 0.55s ease forwards;
+    }
+
+    /* Stagger delays */
+    .animate-on-scroll:nth-child(2) {
+      animation-delay: 0.07s;
+    }
+
+    .animate-on-scroll:nth-child(3) {
+      animation-delay: 0.14s;
+    }
+
+    .animate-on-scroll:nth-child(4) {
+      animation-delay: 0.21s;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      #hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-sidebar {
+        display: none;
+      }
+
+      .hero-right {
+        height: 50vh;
+      }
+
+      .hero-left {
+        padding: 60px 32px;
+      }
+
+      section {
+        padding: 64px 32px;
+      }
+
+      .about-inner,
+      .experience-inner,
+      .life-inner {
+        padding: 0 32px;
+      }
+
+      .about-inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .exp-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .edu-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .skills-section {
+        grid-template-columns: 1fr;
+      }
+
+      .life-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      footer {
+        padding: 48px 32px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      #lang-bar {
+        padding: 12px 20px;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .nav-links {
+        gap: 0px;
+      }
+
+      .nav-link {
+        padding: 5px 8px;
+        font-size: 0.75rem;
+      }
+
+      .travel-map {
+        flex-direction: column;
+        gap: 24px;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .life-grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 2.8rem;
+      }
+    }
+
+    /* ─── LANG HIDDEN ─── */
+    [data-lang] {
+      display: none;
+    }
+
+    [data-lang].show {
+      display: block;
+    }
+
+    .inline-lang {
+      display: none;
+    }
+
+    .inline-lang.show {
+      display: inline;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav id="lang-bar">
+    <a href="#hero" class="logo-mark">Jiake ZHU</a>
+
+    <div class="nav-links">
+      <a href="#about" class="nav-link">
+        <span data-lang="en" class="show">About</span>
+        <span data-lang="fr">À propos</span>
+        <span data-lang="es">Sobre mí</span>
+      </a>
+      <a href="#education" class="nav-link">
+        <span data-lang="en" class="show">Education</span>
+        <span data-lang="fr">Formation</span>
+        <span data-lang="es">Formación</span>
+      </a>
+      <a href="#experience" class="nav-link">
+        <span data-lang="en" class="show">Experience</span>
+        <span data-lang="fr">Expériences</span>
+        <span data-lang="es">Experiencia</span>
+      </a>
+      <a href="#projects" class="nav-link">
+        <span data-lang="en" class="show">Projects</span>
+        <span data-lang="fr">Projets</span>
+        <span data-lang="es">Proyectos</span>
+      </a>
+      <a href="#life" class="nav-link">
+        <span data-lang="en" class="show">Life</span>
+        <span data-lang="fr">Vie</span>
+        <span data-lang="es">Vida</span>
+      </a>
+    </div>
+
+    <div class="nav-right">
+      <div class="lang-switcher">
+        <button class="lang-btn active" onclick="setLang('en')">🇬🇧 EN</button>
+        <button class="lang-btn" onclick="setLang('fr')">🇫🇷 FR</button>
+        <button class="lang-btn" onclick="setLang('es')">🇪🇸 ES</button>
+      </div>
+    </div>
+
+  </nav>
+
+  <!-- HERO -->
+  <div id="hero">
+    <div class="hero-sidebar">
+      <a href="/cdn-cgi/l/email-protection#9ce6f6f7eff3f0f3dcfaf3e4f1fdf5f0b2fff3f1" class="social-link" title="Email">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+          <polyline points="22,6 12,13 2,6" />
+        </svg>
+      </a>
+      <a href="https://www.linkedin.com/in/Jack-zhujiake-career" target="_blank" class="social-link" title="LinkedIn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+          <rect x="2" y="9" width="4" height="12" />
+          <circle cx="4" cy="4" r="2" />
+        </svg>
+      </a>
+      <a href="https://github.com/jkzhusolo-spec" target="_blank" class="social-link" title="GitHub">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+        </svg>
+      </a>
+      <a href="https://instagram.com/zhujiake26" target="_blank" class="social-link" title="Instagram">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+        </svg>
+      </a>
+      <a href="https://x.com/jkzhusolo" target="_blank" class="social-link" title="X / Twitter">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+        </svg>
+      </a>
+      <div class="wechat-wrapper">
+        <div class="social-link" style="cursor:pointer;" title="WeChat">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-5.972 3.032-7.814 1.832-1.171 4.073-1.461 6.155-.948-.008-4.058-3.914-7.37-8.998-7.37m-1.772 3.678a.988.988 0 1 1 0 1.976.988.988 0 0 1 0-1.976zm4.548 0a.988.988 0 1 1 0 1.976.988.988 0 0 1 0-1.976zM24 14.187c0-3.416-3.43-6.188-7.659-6.188-4.229 0-7.659 2.772-7.659 6.188 0 3.416 3.43 6.188 7.659 6.188.859 0 1.684-.127 2.464-.35a.723.723 0 0 1 .6.083l1.596.933a.274.274 0 0 0 .14.047c.134 0 .24-.11.24-.247 0-.06-.023-.12-.038-.177l-.327-1.233a.503.503 0 0 1 .179-.558C23.076 17.98 24 16.184 24 14.187zm-10.301-.538a.825.825 0 1 1 0-1.651.825.825 0 0 1 0 1.651zm5.283 0a.825.825 0 1 1 0-1.651.825.825 0 0 1 0 1.651z" />
+          </svg>
+        </div>
+        <div class="wechat-tooltip">WeChat: Acoolcopper</div>
+      </div>
+    </div>
+
+    <div class="hero-left">
+      <h1>Jiake ZHU <span style="font-size:0.55em;color:var(--sage);vertical-align:middle;">(Jack)</span></h1>
+      <div class="hero-subtitle">
+        <span data-lang="en" class="show">Multilingual · Multidisciplinary · Multi-industry</span>
+        <span data-lang="fr">Plurilingue · Pluridisciplinaire · Multi-sectoriel</span>
+        <span data-lang="es">Plurilingüe · Multidisciplinar · Multisectorial</span>
+      </div>
+      <p class="hero-tagline">
+        <span data-lang="en" class="show">Master's student at SWUFE & Paris 1 Panthéon-Sorbonne. I navigate law,
+          business, tech, and language — wherever the world needs a bridge built.</span>
+        <span data-lang="fr">Étudiant en master à SWUFE et en échange à Paris 1 Panthéon-Sorbonne. Droit, commerce,
+          tech, langues — je construis des ponts là où le monde en a besoin.</span>
+        <span data-lang="es">Estudiante de máster en SWUFE y en intercambio en París 1 Panthéon-Sorbona. Derecho,
+          negocios, tecnología e idiomas — construyo puentes donde el mundo los necesita.</span>
+      </p>
+    </div>
+
+    <div class="hero-right">
+      <img src="images/hero.jpeg" class="hero-photo" alt="Jiake ZHU at the Colosseum, Rome">
+      <div
+        style="position:absolute; bottom: 8px; left: 50%; transform: translateX(-50%); font-size: 0.75rem; font-weight: 600; color: var(--text-dark); background: rgba(255,255,255,0.7); padding: 6px 14px; border-radius: 20px; z-index: 10; backdrop-filter: blur(8px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); display:flex; align-items:center; gap:6px; letter-spacing:0.02em;">
+        📍 Colosseum, Rome</div>
+    </div>
+
+    <div class="hero-scroll-hint" style="position:absolute; bottom:32px; left:50%;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M12 5v14M5 12l7 7 7-7" />
+      </svg>
+      <span data-lang="en" class="show">Scroll</span>
+      <span data-lang="fr">Défiler</span>
+      <span data-lang="es">Bajar</span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div id="about">
+    <div class="about-inner">
+      <div class="about-text">
+        <div class="section-label">
+          <span data-lang="en" class="show">About Me</span>
+          <span data-lang="fr">À propos</span>
+          <span data-lang="es">Sobre mí</span>
+        </div>
+
+        <h2>
+          <span data-lang="en" class="show">Three words.<br>One direction.</span>
+          <span data-lang="fr">Trois mots.<br>Une direction.</span>
+          <span data-lang="es">Tres palabras.<br>Una dirección.</span>
+        </h2>
+
+        <div data-lang="en" class="show">
+          <p>I'm Jack — <strong>multilingual, multidisciplinary, and multi-industry</strong>. My story starts with a
+            double degree in French and Cross-border E-commerce at Zhejiang Gongshang University (ZJSU), continues with
+            a Master's in International Business at SWUFE, and a year at <strong>Paris 1 Panthéon-Sorbonne</strong>
+            studying international and European law.</p>
+          <p>I've navigated Finnish ICT startups, French export sales, cultural diplomacy in Chengdu, and AI talent
+            sourcing at <strong>ByteDance</strong> — always in the language the moment demanded.</p>
+          <p>For me, every new context is just another unfamiliar world to dive into, connect with, and deliver results
+            from.</p>
+        </div>
+
+        <div data-lang="fr">
+          <p>Je suis Jack — <strong>plurilingue, pluridisciplinaire, multi-sectoriel</strong>. Mon parcours commence
+            avec un double diplôme en français et e-commerce à l'UCIE de Zhejiang, se poursuit en master de Commerce
+            International à la SWUFE, et passe par une année d'échange à <strong>Paris 1 Panthéon-Sorbonne</strong> en
+            droit international et européen.</p>
+          <p>J'ai navigué entre une start-up finlandaise en ICT, le commerce export franco-chinois, la diplomatie
+            culturelle à Chengdu, et le recrutement de talents IA chez <strong>ByteDance</strong> — toujours dans la
+            langue qu'imposait le moment.</p>
+          <p>Pour moi, chaque nouveau contexte est simplement un monde inconnu dans lequel plonger, tisser des liens, et
+            produire des résultats concrets.</p>
+        </div>
+
+        <div data-lang="es">
+          <p>Soy Jack — <strong>plurilingüe, multidisciplinar y multisectorial</strong>. Mi historia comienza con un
+            doble grado en francés y comercio electrónico en la ZJSU, continúa con un máster en Comercio Internacional
+            en la SWUFE, y pasa por un año de intercambio en <strong>París 1 Panthéon-Sorbona</strong> estudiando
+            derecho internacional y europeo.</p>
+          <p>He trabajado en una startup finlandesa de TIC, en ventas de exportación con clientes franceses, en
+            diplomacia cultural en Chengdu y en captación de talento para IA en <strong>ByteDance</strong> — siempre en
+            el idioma que el momento exigía.</p>
+          <p>Para mí, cada nuevo contexto es simplemente otro mundo desconocido en el que sumergirse, conectar y generar
+            resultados.</p>
+        </div>
+
+        <div class="about-pills">
+          <span class="pill">🇫🇷 DALF C1</span>
+          <span class="pill">🇬🇧 IELTS 7.5</span>
+          <span class="pill">🇪🇸 A2–B1</span>
+          <span class="pill">🇨🇳 Native</span>
+          <span class="pill">AI Builder</span>
+          <span class="pill">Vibe Coder</span>
+          <span class="pill">Global Explorer</span>
+        </div>
+      </div>
+
+      <div class="about-right-col">
+        <div class="about-stats">
+          <div class="stat-card">
+            <div class="stat-number">3</div>
+            <div class="stat-label">
+              <span data-lang="en" class="show">Degrees across 3 universities</span>
+              <span data-lang="fr">Diplômes dans 3 universités</span>
+              <span data-lang="es">Títulos en 3 universidades</span>
+            </div>
+            <div class="stat-icon" style="margin-left: auto; display: flex; gap: 6px; align-items: center;">
+              <img src="images/paris1.png" style="width: 26px; height: 26px; object-fit: contain; border-radius: 4px;"
+                title="Paris 1" onerror="this.style.display='none'">
+              <img src="images/swufe.png" style="width: 26px; height: 26px; object-fit: contain; border-radius: 4px;"
+                title="SWUFE" onerror="this.style.display='none'">
+              <img src="images/zjsu.png" style="width: 26px; height: 26px; object-fit: contain; border-radius: 4px;"
+                title="ZJSU" onerror="this.style.display='none'">
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">4</div>
+            <div class="stat-label">
+              <span data-lang="en" class="show">Internships across 4 industries</span>
+              <span data-lang="fr">Stages dans 4 secteurs</span>
+              <span data-lang="es">Prácticas en 4 sectores</span>
+            </div>
+            <div class="stat-icon" style="margin-left: auto; display: flex; gap: 6px; align-items: center;">
+              <img src="images/bytedance.png"
+                style="width: 26px; height: 26px; object-fit: contain; border-radius: 6px; background: #fff;"
+                title="ByteDance" onerror="this.style.display='none'">
+              <img src="images/alliance.png"
+                style="width: 26px; height: 26px; object-fit: contain; border-radius: 6px; background: #fff;"
+                title="Alliance Française" onerror="this.style.display='none'">
+              <img src="images/marketunion.png"
+                style="width: 26px; height: 26px; object-fit: contain; border-radius: 6px; background: #fff;"
+                title="Market Union" onerror="this.style.display='none'">
+              <img src="images/mingle.png"
+                style="width: 26px; height: 26px; object-fit: contain; border-radius: 6px; background: #fff;"
+                title="Mingle Advisors" onerror="this.style.display='none'">
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">5</div>
+            <div class="stat-label">
+              <span data-lang="en" class="show">Languages spoken</span>
+              <span data-lang="fr">Langues maîtrisées</span>
+              <span data-lang="es">Idiomas dominados</span>
+            </div>
+            <div class="stat-icon" style="margin-left: auto; display: flex; gap: 8px; font-size: 1.6rem;">
+              <span>🇨🇳</span><span>🇬🇧</span><span>🇫🇷</span><span>🇪🇸</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">16</div>
+            <div class="stat-label">
+              <span data-lang="en" class="show">Countries visited</span>
+              <span data-lang="fr">Pays visités</span>
+              <span data-lang="es">Países visitados</span>
+            </div>
+            <div class="stat-icon"
+              style="margin-left: auto; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; max-width: 180px; font-size: 1.4rem; line-height: 1.4;">
+              <span>🇨🇳</span><span>🇫🇷</span><span>🇫🇮</span><span>🇩🇪</span><span>🇳🇱</span><span>🇧🇪</span><span>🇦🇹</span><span>🇨🇿</span><span>🇸🇰</span><span>🇭🇺</span><span>🇪🇸</span><span>🇮🇹</span><span>🇨🇭</span><span>🇳🇴</span><span>🇻🇦</span><span>🇱🇺</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="section-label">
+      <span data-lang="en" class="show">Education</span>
+      <span data-lang="fr">Formation</span>
+      <span data-lang="es">Formación</span>
+    </div>
+
+    <h2>
+      <span data-lang="en" class="show">Learning across<br>borders</span>
+      <span data-lang="fr">Apprendre par-delà<br>les frontières</span>
+      <span data-lang="es">Aprender sin<br>fronteras</span>
+    </h2>
+
+    <div class="edu-grid">
+
+      <div class="edu-card animate-on-scroll">
+        <div class="edu-period">2025.09 – 2026.06</div>
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom: 8px;">
+          <div class="edu-school">Université Paris 1<br>Panthéon-Sorbonne</div>
+          <img src="images/paris1.png" style="width:2.5rem; height:2.5rem; object-fit:contain; flex-shrink:0;">
+        </div>
+        <div class="edu-degree">
+          <span data-lang="en" class="show">International Law Master's — Exchange Student</span>
+          <span data-lang="fr">Master Droit International — Étudiant en échange</span>
+          <span data-lang="es">Máster en Derecho Internacional — Estudiante de intercambio</span>
+        </div>
+        <div class="edu-badges"><span class="edu-badge">QS World Law #17</span></div>
+        <div class="edu-courses">
+          <span data-lang="en" class="show">International Trade Law · Comparative Law · HR Management · AI Law · EU
+            Digital Information Law</span>
+          <span data-lang="fr">Droit du commerce international · Droit comparé · GRH · Droit de l'IA · Droit numérique
+            européen</span>
+          <span data-lang="es">Derecho del comercio internacional · Derecho comparado · RRHH · Derecho de IA · Derecho
+            digital de la UE</span>
+        </div>
+      </div>
+
+      <div class="edu-card animate-on-scroll">
+        <div class="edu-period">2024.09 – 2027.06</div>
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom: 8px;">
+          <div class="edu-school">
+            <span data-lang="en" class="show">Southwestern University of Finance &amp; Economics (SWUFE)</span>
+            <span data-lang="fr">Université du Sud-Ouest pour les Finances et l'Économie (SWUFE)</span>
+            <span data-lang="es">Universidad del Suroeste de Finanzas y Economía (SWUFE)</span>
+          </div>
+          <img src="images/swufe.png" style="width:2.5rem; height:2.5rem; object-fit:contain; flex-shrink:0;">
+        </div>
+        <div class="edu-degree" style="margin-top:4px;">
+          <span data-lang="en" class="show">Master of International Business · Direct PhD Track</span>
+          <span data-lang="fr">Master en Commerce International · filière doctorale directe</span>
+          <span data-lang="es">Máster en Comercio Internacional · vía doctorado directo</span>
+        </div>
+        <div class="edu-badges">
+          <span class="edu-badge">Economics A+</span>
+          <span class="edu-badge">211 University</span>
+          <span class="edu-badge">985 Discipline</span>
+        </div>
+      </div>
+
+      <div class="edu-card animate-on-scroll">
+        <div class="edu-period">2020.09 – 2024.06</div>
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom: 8px;">
+          <div class="edu-school">
+            <span data-lang="en" class="show">Zhejiang Gongshang University (ZJSU)</span>
+            <span data-lang="fr">Université Gongshang du Zhejiang (ZJSU)</span>
+            <span data-lang="es">Universidad Gongshang de Zhejiang (ZJSU)</span>
+          </div>
+          <img src="images/zjsu.png" style="width:2.5rem; height:2.5rem; object-fit:contain; flex-shrink:0;">
+        </div>
+        <div class="edu-degree" style="margin-top:4px;">
+          <span data-lang="en" class="show">Double Bachelor: French Language / Cross-border E-commerce</span>
+          <span data-lang="fr">Double licence : Langue française / Commerce électronique transfrontalier</span>
+          <span data-lang="es">Doble licenciatura: Lengua francesa / Comercio electrónico transfronterizo</span>
+        </div>
+        <div class="edu-badges">
+          <span class="edu-badge">
+            <span data-lang="en" class="show">Top of Class</span>
+            <span data-lang="fr">Major de promotion</span>
+            <span data-lang="es">Primero de clase</span>
+          </span>
+          <span class="edu-badge">
+            <span data-lang="en" class="show">National Scholarship</span>
+            <span data-lang="fr">Bourse nationale</span>
+            <span data-lang="es">Beca nacional</span>
+          </span>
+          <span class="edu-badge">
+            <span data-lang="en" class="show">Provincial Gov. Scholarship</span>
+            <span data-lang="fr">Bourse provinciale</span>
+            <span data-lang="es">Beca Provincial</span>
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- EXPERIENCE -->
+  <div id="experience">
+    <div class="experience-inner">
+      <div class="section-label">
+        <span data-lang="en" class="show">Experience</span>
+        <span data-lang="fr">Expériences</span>
+        <span data-lang="es">Experiencia</span>
+      </div>
+
+      <h2>
+        <span data-lang="en" class="show">Four industries.<br>One thread.</span>
+        <span data-lang="fr">Quatre secteurs.<br>Un fil conducteur.</span>
+        <span data-lang="es">Cuatro sectores.<br>Un mismo hilo.</span>
+      </h2>
+
+      <div class="exp-grid">
+        <div class="exp-card animate-on-scroll">
+          <div class="exp-header">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <img src="images/bytedance.png" class="company-logo" alt="ByteDance" style="background:#fff;"
+                onerror="this.style.display='none'">
+              <svg width="28" height="28" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg"
+                style="border-radius:6px;border:1px solid var(--border);flex-shrink:0;">
+                <rect width="28" height="28" fill="#010101" rx="6" />
+                <path
+                  d="M18.5 8c-.8-.9-1.3-2.1-1.3-3.4h-2.4V17c0 1.2-1 2.1-2.2 2.1s-2.2-.9-2.2-2.1.9-2.1 2.2-2.1c.2 0 .4 0 .5.1v-2.5c-.2 0-.3 0-.5 0-2.6 0-4.7 2.1-4.7 4.6s2.1 4.6 4.7 4.6 4.7-2.1 4.7-4.6V11c.9.6 2 1 3.2 1V9.6c-.8 0-1.5-.6-2-.6z"
+                  fill="#fe2c55" />
+                <path
+                  d="M18.5 8c-.8-.9-1.3-2.1-1.3-3.4h-2.4V17c0 1.2-1 2.1-2.2 2.1s-2.2-.9-2.2-2.1.9-2.1 2.2-2.1c.2 0 .4 0 .5.1v-2.5c-.2 0-.3 0-.5 0-2.6 0-4.7 2.1-4.7 4.6s2.1 4.6 4.7 4.6 4.7-2.1 4.7-4.6V11c.9.6 2 1 3.2 1V9.6c-.8 0-1.5-.6-2-.6z"
+                  fill="#25f4ee" transform="translate(1,0)" />
+                <path
+                  d="M18.5 8c-.8-.9-1.3-2.1-1.3-3.4h-2.4V17c0 1.2-1 2.1-2.2 2.1s-2.2-.9-2.2-2.1.9-2.1 2.2-2.1c.2 0 .4 0 .5.1v-2.5c-.2 0-.3 0-.5 0-2.6 0-4.7 2.1-4.7 4.6s2.1 4.6 4.7 4.6 4.7-2.1 4.7-4.6V11c.9.6 2 1 3.2 1V9.6c-.8 0-1.5-.6-2-.6z"
+                  fill="white" transform="translate(0.5,0)" />
+              </svg>
+              <div class="exp-company">ByteDance / TikTok</div>
+            </div>
+            <div class="exp-period">2025.05 – 2025.09</div>
+          </div>
+          <div class="exp-role">
+            <span data-lang="en" class="show">Global Talent Acquisition</span>
+            <span data-lang="fr">Acquisition de talents internationaux</span>
+            <span data-lang="es">Atracción de talento global</span>
+          </div>
+          <ul class="exp-bullets">
+            <li>
+              <span data-lang="en" class="show">Built an AI talent database covering 400+ professors, 900+ PhDs and 200+
+                Master's students for Seed AI Research Team</span>
+              <span data-lang="fr">Construit une base de données de talents IA de 400+ professeurs, 900+ doctorants et
+                200+ master pour l'équipe Seed AI Research</span>
+              <span data-lang="es">Construí una base de datos de talento IA con más de 400 profesores, 900 doctorandos y
+                200 másters para el equipo Seed AI Research</span>
+            </li>
+            <li>
+              <span data-lang="en" class="show">Supported TikTok LIVE talent sourcing across Germany, France and the UK;
+                developed deep knowledge of European social media behavior</span>
+              <span data-lang="fr">Soutien au sourcing TikTok LIVE en Allemagne, France et Royaume-Uni ; développement
+                d'une connaissance approfondie des comportements des utilisateurs européens sur les réseaux
+                sociaux</span>
+              <span data-lang="es">Apoyé el sourcing de talento para TikTok LIVE en Alemania, Francia y Reino Unido;
+                desarrollé un conocimiento profundo del comportamiento europeo en redes sociales</span>
+            </li>
+          </ul>
+          <div style="margin-top:auto; display:flex; justify-content:flex-end;">
+            <a href="javascript:void(0)" onclick="openModal('modal-bytedance-rec')"
+              style="padding:6px 14px; font-size:0.85rem; font-weight:500; background:rgba(184,151,90,0.1); color:var(--gold); border-radius:12px; text-decoration:none; display:inline-flex; align-items:center; transition:all 0.2s;">
+              <span data-lang="en" class="show">📄 Recommendation Letter</span>
+              <span data-lang="fr">📄 Lettre de recommandation</span>
+              <span data-lang="es">📄 Carta de recomendación</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="exp-card animate-on-scroll">
+          <div class="exp-header">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <img src="images/alliance.png" class="company-logo" alt="Alliance Française"
+                onerror="this.style.display='none'">
+              <div class="exp-company">Alliance Française de Chengdu</div>
+            </div>
+            <div class="exp-period">2024.09 – 2025.03</div>
+          </div>
+          <div class="exp-role">
+            <span data-lang="en" class="show">Sino-French Cultural Coordination</span>
+            <span data-lang="fr">Coordinateur culturel franco-chinois</span>
+            <span data-lang="es">Coordinador cultural sino-francés</span>
+          </div>
+          <ul class="exp-bullets">
+            <li>
+              <span data-lang="en" class="show">Planned and executed 5 Sino-French cultural exchange events, serving
+                800+ participants</span>
+              <span data-lang="fr">Planification et exécution de 5 événements d'échange culturel franco-chinois, avec
+                800+ participants</span>
+              <span data-lang="es">Planifiqué y ejecuté 5 eventos de intercambio cultural sino-francés con más de 800
+                participantes</span>
+            </li>
+            <li>
+              <span data-lang="en" class="show">Managed bilingual communications, customer relationships, and
+                co-authored a Sino-French cultural handbook</span>
+              <span data-lang="fr">Gestion des communications bilingues, des relations clients et co-rédaction d'un
+                manuel culturel franco-chinois</span>
+              <span data-lang="es">Gestioné comunicaciones bilingües, relaciones con clientes y co-redacté un manual
+                cultural sino-francés</span>
+            </li>
+          </ul>
+          <div style="margin-top:auto; display:flex; justify-content:flex-end;">
+            <a href="javascript:void(0)" onclick="openModal('modal-alliance-rec')"
+              style="padding:6px 14px; font-size:0.85rem; font-weight:500; background:rgba(184,151,90,0.1); color:var(--gold); border-radius:12px; text-decoration:none; display:inline-flex; align-items:center; transition:all 0.2s;">
+              <span data-lang="en" class="show">📄 Recommendation Letters</span>
+              <span data-lang="fr">📄 Lettres de recommandation</span>
+              <span data-lang="es">📄 Cartas de recomendación</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="exp-card animate-on-scroll">
+          <div class="exp-header">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <img src="images/marketunion.png" class="company-logo" alt="Market Union"
+                onerror="this.style.display='none'">
+              <div class="exp-company">Market Union</div>
+            </div>
+            <div class="exp-period">2024.09 – 2025.03</div>
+          </div>
+          <div class="exp-role">
+            <span data-lang="en" class="show">French-speaking Export Sales</span>
+            <span data-lang="fr">Chargée d'export francophone</span>
+            <span data-lang="es">Ejecutiva de exportación francófona</span>
+          </div>
+          <ul class="exp-bullets">
+            <li>
+              <span data-lang="en" class="show">Built long-term partnerships with 5+ French clients, facilitating over
+                $1M in orders</span>
+              <span data-lang="fr">Développement de partenariats durables avec 5+ clients français, facilitant plus d'1
+                M$ de commandes</span>
+              <span data-lang="es">Desarrollé alianzas con más de 5 clientes franceses, facilitando pedidos por más de 1
+                millón de dólares</span>
+            </li>
+            <li>
+              <span data-lang="en" class="show">Sourced and evaluated suppliers via 1688 and ERP systems; coordinated
+                factory visits in Yiwu and Cixi</span>
+              <span data-lang="fr">Sourcing et évaluation de fournisseurs via 1688 et ERP ; coordination de visites
+                d'usines à Yiwu et Cixi</span>
+              <span data-lang="es">Seleccioné y evalué proveedores con 1688 y ERP; coordiné visitas a fábricas en Yiwu y
+                Cixi</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="exp-card animate-on-scroll">
+          <div class="exp-header">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <img src="images/mingle.png" class="company-logo" alt="Mingle Advisors" style="background:#fff;"
+                onerror="this.style.display='none'">
+              <div class="exp-company">Mingle Advisors</div>
+            </div>
+            <div class="exp-period">2023.11 – 2024.03</div>
+          </div>
+          <div class="exp-role">
+            <span data-lang="en" class="show">Sino-Finnish Project Manager</span>
+            <span data-lang="fr">Chargée de projet sino-finlandais</span>
+            <span data-lang="es">Gestora de proyectos sino-finlandeses</span>
+          </div>
+          <ul class="exp-bullets">
+            <li>
+              <span data-lang="en" class="show">Represented Business Finland; helped 8 Finnish ICT companies enter the
+                Chinese market in digital health and industrial sectors</span>
+              <span data-lang="fr">Représentante de Business Finland ; accompagnement de 8 entreprises finlandaises ICT
+                dans leur entrée sur le marché chinois en santé numérique et industrie</span>
+              <span data-lang="es">Representé a Business Finland; ayudé a 8 empresas finlandesas de TIC a entrar en el
+                mercado chino en salud digital e industria</span>
+            </li>
+            <li>
+              <span data-lang="en" class="show">Hosted Sino-Finnish Digital Industry Matchmaking event at Global Digital
+                Trade Expo; facilitated Alibaba, iFLYTEK × Neurosonic collaborations</span>
+              <span data-lang="fr">Animation d'un événement de mise en relation sino-finlandaise à l'Expo mondiale du
+                commerce numérique ; facilitation des collaborations Alibaba, iFLYTEK × Neurosonic</span>
+              <span data-lang="es">Organicé el evento de encuentro empresarial sino-finlandés en la Expo Global de
+                Comercio Digital; facilitando colaboraciones entre Alibaba, iFLYTEK × Neurosonic</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="padding-bottom: 0;"></div>
+    </div>
+  </div>
+
+  <!-- PROJECTS / AI PORTFOLIO -->
+  <section id="projects">
+    <div class="section-label">
+      <span data-lang="en" class="show">AI Portfolio</span>
+      <span data-lang="fr">Projets IA</span>
+      <span data-lang="es">Proyectos IA</span>
+    </div>
+
+    <h2>
+      <span data-lang="en" class="show">Building with AI,<br>not just using it.</span>
+      <span data-lang="fr">Construire avec l'IA,<br>pas seulement l'utiliser.</span>
+      <span data-lang="es">Construir con IA,<br>no solo usarla.</span>
+    </h2>
+
+    <div class="projects-grid">
+      <div class="project-card animate-on-scroll">
+        <div class="project-header">
+          <div class="project-name">Jiake Orbit 🪐</div>
+          <div class="project-tagline">
+            <span data-lang="en" class="show">A personal habit & task management app — build your daily rituals, unlock
+              new planets and NFT badges, track your growth, and capture sparks of inspiration.</span>
+            <span data-lang="fr">Une application de gestion des habitudes et des tâches — construis tes rituels
+              quotidiens, débloque de nouvelles planètes et badges NFT, suis ta progression et capture tes éclairs
+              d'inspiration.</span>
+            <span data-lang="es">Una app de gestión de hábitos y tareas — construye tus rituales diarios, desbloquea
+              nuevos planetas y badges NFT, lleva un seguimiento de tu progreso y captura tus chispas de
+              inspiración.</span>
+          </div>
+        </div>
+        <div class="project-body">
+          <p class="project-desc">
+            <span data-lang="en" class="show">Jiake Orbit gamifies personal growth. Streak check-ins unlock celestial
+              rewards. Built-in Spark mode lets you capture fleeting ideas. An evening journal closes out each day. Data
+              analytics show you where your focus actually goes — across habits, time, and energy.</span>
+            <span data-lang="fr">Jiake Orbit gamifie la croissance personnelle. Les séries de check-ins débloquent des
+              récompenses célestes. Le mode Spark intégré vous permet de capturer les idées fugaces. Un journal du soir
+              clôture chaque journée. Les analytics montrent où va réellement votre attention — habitudes, temps et
+              énergie.</span>
+            <span data-lang="es">Jiake Orbit gamifica el crecimiento personal. Las rachas de check-ins desbloquean
+              recompensas celestes. El modo Spark incorporado te permite capturar ideas fugaces. Un diario nocturno
+              cierra
+              cada día. Los datos te muestran dónde va realmente tu foco — hábitos, tiempo y energía.</span>
+          </p>
+          <div class="project-features">
+            <span class="feature-tag">✅ Habit Tracking</span>
+            <span class="feature-tag">🪐 Planet Rewards</span>
+            <span class="feature-tag">🏅 NFT Badges</span>
+            <span class="feature-tag">⚡ Spark Notes</span>
+            <span class="feature-tag">🌙 Daily Journal</span>
+            <span class="feature-tag">📊 Analytics</span>
+          </div>
+          <a href="https://jiake-s-habitorbit-862252904166.us-west1.run.app/" target="_blank" class="project-link">
+            <span data-lang="en" class="show">Launch App</span>
+            <span data-lang="fr">Ouvrir l'app</span>
+            <span data-lang="es">Abrir la app</span>
+            →
+          </a>
+        </div>
+      </div>
+
+      <div class="project-card animate-on-scroll">
+        <div class="project-header" style="background: linear-gradient(135deg, #3D4A32 0%, #6B7A5A 100%);">
+          <div class="project-name">English Tutoring Prep Agent 🤖</div>
+          <div class="project-tagline">
+            <span data-lang="en" class="show">A local AI agent that automates my entire English tutoring workflow — from
+              lesson prep to sending materials to students.</span>
+            <span data-lang="fr">Un agent IA local qui automatise l'ensemble de mon flux de travail de tutorat en
+              anglais
+              — de la préparation des cours à l'envoi des supports aux élèves.</span>
+            <span data-lang="es">Un agente de IA local que automatiza todo mi flujo de trabajo de tutoría de inglés —
+              desde la preparación de clases hasta el envío de materiales a los estudiantes.</span>
+          </div>
+        </div>
+        <div class="project-body">
+          <p class="project-desc">
+            <span data-lang="en" class="show">As a non-technical builder, I designed and deployed a local AI agent using
+              Claude Desktop and filesystem MCP that automates my entire English tutoring prep. Prep time cut
+              from 30 minutes to under 5.</span>
+            <span data-lang="fr">En tant que builder non-technique, j'ai conçu et déployé un agent IA local avec Claude
+              Desktop et filesystem MCP qui automatise toute ma préparation de cours d'anglais. Le
+              temps de préparation est passé de 30 minutes à moins de 5.</span>
+            <span data-lang="es">Como builder no técnico, diseñé y desplegué un agente de IA local con Claude Desktop y
+              filesystem MCP que automatiza toda mi preparación de clases de inglés. El tiempo de preparación
+              pasó de 30 minutos a menos de 5.</span>
+          </p>
+          <div class="project-features">
+            <span class="feature-tag">🤖 Claude Desktop</span>
+            <span class="feature-tag">📂 Filesystem MCP</span>
+            <span class="feature-tag">📝 Auto Lesson Plan</span>
+            <span class="feature-tag">✉️ Auto Email</span>
+            <span class="feature-tag">⏱️ 30min → 5min</span>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="project-card animate-on-scroll">
+        <div class="project-header" style="background: linear-gradient(135deg, #1a2a4a 0%, #2563a8 60%, #0ea5b0 100%);">
+          <div class="project-name">LingoVibe 🌐</div>
+          <div class="project-tagline">
+            <span data-lang="en" class="show">A trilingual context engine — decoding the cultural "vibe" behind English,
+              French, and Spanish words in real time.</span>
+            <span data-lang="fr">Un moteur de contexte trilingue — décodant les « vibes » culturelles des mots en
+              anglais,
+              français et espagnol en temps réel.</span>
+            <span data-lang="es">Un motor de contexto trilingüe — que decodifica el "vibe" cultural de palabras en
+              inglés,
+              francés y español en tiempo real.</span>
+          </div>
+        </div>
+        <div class="project-body">
+          <p class="project-desc">
+            <span data-lang="en" class="show">I engineered LingoVibe as a context-aware logic bridge. Powered by Gemini
+              1.5 Pro, it decodes the underlying social nuances of words — moving beyond
+              dictionary definitions to provide real-time cultural mapping. Built on Next.js App Router with
+              Supabase.</span>
+            <span data-lang="fr">J'ai conçu LingoVibe comme un pont logique contextuel. Propulsé par
+              Gemini 1.5 Pro, il décode les nuances sociales profondes des mots — au-delà des définitions de
+              dictionnaire. Construit sur Next.js App Router avec Supabase.</span>
+            <span data-lang="es">Diseñé LingoVibe como un puente lógico contextual. Impulsado por
+              Gemini 1.5 Pro, decodifica los matices sociales profundos de las palabras — más allá de las definiciones
+              del
+              diccionario. Construido con Next.js App Router, Supabase.</span>
+          </p>
+          <div class="project-features">
+            <span class="feature-tag">🌐 Gemini 1.5 Pro</span>
+            <span class="feature-tag">⚡ Next.js App Router</span>
+            <span class="feature-tag">🗄️ Supabase</span>
+            <span class="feature-tag">🚀 Vercel CI/CD</span>
+            <span class="feature-tag">🇬🇧🇫🇷🇪🇸 EN · FR · ES</span>
+            <span class="feature-tag">📱 PWA</span>
+          </div>
+          <a href="https://lingovibe-seven.vercel.app/" target="_blank" class="project-link">
+            <span data-lang="en" class="show">Launch App</span>
+            <span data-lang="fr">Ouvrir l'app</span>
+            <span data-lang="es">Abrir la app</span>
+            →
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <p style="margin-top: 32px; color: var(--text-muted); font-size: 0.88rem; font-style: italic;">
+      <span data-lang="en" class="show">More projects coming soon — Chrome extension, WeChat mini-program, and
+        more.</span>
+      <span data-lang="fr">D'autres projets arrivent bientôt — extension Chrome, mini-programme WeChat, et plus
+        encore.</span>
+      <span data-lang="es">Más proyectos próximamente — extensión de Chrome, mini-programa de WeChat, y más.</span>
+    </p>
+  </section>
+
+
+
+  <!-- LIFE -->
+  <div id="life">
+    <div class="life-inner">
+      <div class="section-label">
+        <span data-lang="en" class="show">Life</span>
+        <span data-lang="fr">Vie personnelle</span>
+        <span data-lang="es">Vida personal</span>
+      </div>
+
+      <h2>
+        <span data-lang="en" class="show">Beyond the résumé</span>
+        <span data-lang="fr">Au-delà du CV</span>
+        <span data-lang="es">Más allá del currículum</span>
+      </h2>
+
+      <div class="life-grid">
+
+        <!-- READING -->
+        <div class="life-card life-card-clickable" onclick="openModal('modal-reading')">
+          <div style="display:flex; align-items:center; gap: 12px; margin-bottom: 12px;">
+            <div class="life-icon">📚</div>
+            <div class="life-card-title">
+              <span data-lang="en" class="show">Reading & Podcasts</span>
+              <span data-lang="fr">Lecture & Podcasts</span>
+              <span data-lang="es">Lectura y Podcasts</span>
+            </div>
+            <div style="margin-left:auto; display:flex; gap:4px; margin-right:4px;">
+              <img src="images/1984.png"
+                style="width:28px; height:40px; border-radius:3px; object-fit:cover; border:1px solid rgba(0,0,0,0.1);"
+                onerror="this.style.display='none'">
+              <img src="images/像水一样吧朋友.png"
+                style="width:28px; height:40px; border-radius:3px; object-fit:cover; border:1px solid rgba(0,0,0,0.1);"
+                onerror="this.style.display='none'">
+              <img src="images/独树不成林.png"
+                style="width:28px; height:40px; border-radius:3px; object-fit:cover; border:1px solid rgba(0,0,0,0.1);"
+                onerror="this.style.display='none'">
+              <img src="images/AI&I.png"
+                style="width:28px; height:40px; border-radius:3px; object-fit:cover; border:1px solid rgba(0,0,0,0.1);"
+                onerror="this.style.display='none'">
+            </div>
+
+          </div>
+          <div class="life-card-text">
+            <span data-lang="en" class="show">Books and voices that shaped how I think — across economics, philosophy,
+              and the art of paying attention.</span>
+            <span data-lang="fr">Livres et voix qui ont façonné ma pensée — entre économie, philosophie et l'art de
+              faire attention.</span>
+            <span data-lang="es">Libros y voces que moldearon mi forma de pensar — entre economía, filosofía y el arte
+              de prestar atención.</span>
+          </div>
+          <div class="life-card-cta">
+            <span data-lang="en" class="show">View picks →</span>
+            <span data-lang="fr">Voir mes choix →</span>
+            <span data-lang="es">Ver selección →</span>
+          </div>
+        </div>
+
+        <!-- FILMS -->
+        <div class="life-card life-card-clickable" onclick="openModal('modal-films')">
+          <div style="display:flex; align-items:center; gap: 12px; margin-bottom: 12px;">
+            <div class="life-icon">🎬</div>
+            <div class="life-card-title">
+              <span data-lang="en" class="show">Films & Series</span>
+              <span data-lang="fr">Cinéma & Séries</span>
+              <span data-lang="es">Cine y Series</span>
+            </div>
+            <div style="margin-left:auto; display:flex; gap:4px; margin-right:4px;">
+              <img src="images/传奇办公室.png"
+                style="width:28px; height:40px; border-radius:3px; object-fit:cover; border:1px solid rgba(0,0,0,0.1);"
+                onerror="this.style.display='none'">
+              <img src="images/黎明的一切.png"
+                style="width:28px; height:40px; border-radius:3px; object-fit:cover; border:1px solid rgba(0,0,0,0.1);"
+                onerror="this.style.display='none'">
+              <img src="images/筋疲力尽.png"
+                style="width:28px; height:40px; border-radius:3px; object-fit:cover; border:1px solid rgba(0,0,0,0.1);"
+                onerror="this.style.display='none'">
+              <img src="images/纸牌屋.jpeg"
+                style="width:28px; height:40px; border-radius:3px; object-fit:cover; border:1px solid rgba(0,0,0,0.1);"
+                onerror="this.style.display='none'">
+            </div>
+
+          </div>
+          <div class="life-card-text">
+            <span data-lang="en" class="show">From French spy thrillers to Japanese slow cinema — my watchlist crosses
+              borders just like I do.</span>
+            <span data-lang="fr">Des thrillers d'espionnage français au cinéma lent japonais — ma liste traverse les
+              frontières comme moi.</span>
+            <span data-lang="es">De los thrillers de espionaje franceses al cine lento japonés — mi lista cruza
+              fronteras igual que yo.</span>
+          </div>
+          <div class="life-card-cta">
+            <span data-lang="en" class="show">View picks →</span>
+            <span data-lang="fr">Voir mes choix →</span>
+            <span data-lang="es">Ver selección →</span>
+          </div>
+        </div>
+
+        <!-- SPORT -->
+        <div class="life-card life-card-clickable" onclick="openModal('modal-sport')">
+          <div style="display:flex; align-items:center; gap: 12px; margin-bottom: 12px;">
+            <div class="life-icon">🏀</div>
+            <div class="life-card-title">
+              <span data-lang="en" class="show">Basketball & Running</span>
+              <span data-lang="fr">Basket & Course</span>
+              <span data-lang="es">Baloncesto y Running</span>
+            </div>
+          </div>
+          <div class="life-card-text">
+            <span data-lang="en" class="show">The court and the road both teach the same thing — show up, stay
+              consistent, trust the process.</span>
+            <span data-lang="fr">Le terrain et la route enseignent la même chose — être présent, rester régulier, faire
+              confiance au processus.</span>
+            <span data-lang="es">La cancha y la carretera enseñan lo mismo — aparecer, ser constante, confiar en el
+              proceso.</span>
+          </div>
+          <div class="life-card-cta">
+            <span data-lang="en" class="show">View photos →</span>
+            <span data-lang="fr">Voir photos →</span>
+            <span data-lang="es">Ver fotos →</span>
+          </div>
+        </div>
+
+        <!-- TRAVEL -->
+        <div class="life-card life-card-clickable" onclick="openModal('modal-travel')">
+          <div style="display:flex; align-items:center; gap: 12px; margin-bottom: 12px;">
+            <div class="life-icon">✈️</div>
+            <div class="life-card-title">
+              <span data-lang="en" class="show">Travel</span>
+              <span data-lang="fr">Voyages</span>
+              <span data-lang="es">Viajes</span>
+            </div>
+          </div>
+          <div class="life-card-text">
+            <span data-lang="en" class="show">16 countries and counting. Not just tourism — each trip is a field study
+              in culture, language, and how people build their worlds.</span>
+            <span data-lang="fr">16 pays, et ce n'est pas fini. Chaque voyage est une étude de terrain sur la culture et
+              la langue.</span>
+            <span data-lang="es">16 países y contando. Cada viaje es un estudio de campo sobre cultura, idioma y
+              perspectivas.</span>
+          </div>
+          <div
+            style="display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 16px; font-size: 1.2rem; line-height: 1.2;">
+            <span>🇨🇳</span><span>🇫🇷</span><span>🇫🇮</span><span>🇩🇪</span><span>🇳🇱</span><span>🇧🇪</span><span>🇦🇹</span><span>🇨🇿</span><span>🇸🇰</span><span>🇭🇺</span><span>🇪🇸</span><span>🇮🇹</span><span>🇨🇭</span><span>🇳🇴</span><span>🇻🇦</span><span>🇱🇺</span>
+          </div>
+          <div class="life-card-cta" style="margin-top: auto;">
+            <span data-lang="en" class="show">View photos →</span>
+            <span data-lang="fr">Voir photos →</span>
+            <span data-lang="es">Ver fotos →</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+     MODALS
+═══════════════════════════════════════════ -->
+
+  <!-- MODAL OVERLAY -->
+  <div id="modal-overlay" onclick="closeAllModals()"></div>
+
+  <!-- FILMS MODAL -->
+  <div id="modal-films" class="life-modal">
+    <div class="modal-header">
+      <div class="modal-title">
+        🎬 <span data-lang="en" class="show">Films & Series</span>
+        <span data-lang="fr">Cinéma & Séries</span>
+        <span data-lang="es">Cine y Series</span>
+      </div>
+      <button class="modal-close" onclick="closeAllModals()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="media-grid">
+
+        <div class="media-card featured">
+          <img src="images/传奇办公室.png" onerror="this.style.display='none'">
+          <div class="media-info">
+            <div class="media-title">Le Bureau des Légendes (传奇办公室)</div>
+            <div class="media-tag">⭐ Favourite</div>
+          </div>
+        </div>
+
+        <div class="media-card">
+          <img src="images/纸牌屋.jpeg" onerror="this.style.display='none'">
+          <div class="media-info">
+            <div class="media-title">House of Cards (纸牌屋)</div>
+          </div>
+        </div>
+
+        <div class="media-card">
+          <img src="images/黎明的一切.png" onerror="this.style.display='none'">
+          <div class="media-info">
+            <div class="media-title">夜明けのすべて (黎明的一切)</div>
+          </div>
+        </div>
+
+        <div class="media-card">
+          <img src="images/刺猬的优雅.png" onerror="this.style.display='none'">
+          <div class="media-info">
+            <div class="media-title">Le Hérisson (刺猬的优雅)</div>
+          </div>
+        </div>
+
+        <div class="media-card">
+          <img src="images/百分之十.png" onerror="this.style.display='none'">
+          <div class="media-info">
+            <div class="media-title">Dix Pour Cent (百分之十)</div>
+          </div>
+        </div>
+
+        <div class="media-card">
+          <img src="images/因果报应.png" onerror="this.style.display='none'">
+          <div class="media-info">
+            <div class="media-title">Maharaja (因果报应)</div>
+          </div>
+        </div>
+
+        <div class="media-card">
+          <img src="images/筋疲力尽.png" onerror="this.style.display='none'">
+          <div class="media-info">
+            <div class="media-title">À bout de souffle (精疲力尽)</div>
+          </div>
+        </div>
+
+        <div class="media-card">
+          <img src="images/坠落的审判.png" onerror="this.style.display='none'">
+          <div class="media-info">
+            <div class="media-title">Anatomie d'une chute (坠落的审判)</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SPORT MODAL -->
+  <div id="modal-sport" class="life-modal">
+    <div class="modal-header">
+      <div class="modal-title">
+        🏀 <span data-lang="en" class="show">Basketball & Running</span>
+        <span data-lang="fr">Basket & Course</span>
+        <span data-lang="es">Baloncesto y Running</span>
+      </div>
+      <button class="modal-close" onclick="closeAllModals()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="photo-grid" id="sport-photos">
+        <div class="photo-placeholder">
+          <span data-lang="en" class="show">Photos coming soon — upload to GitHub images/ folder</span>
+          <span data-lang="fr">Photos bientôt disponibles</span>
+          <span data-lang="es">Fotos próximamente</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- READING MODAL -->
+  <div id="modal-reading" class="life-modal">
+    <div class="modal-header">
+      <div class="modal-title">
+        📚 <span data-lang="en" class="show">Reading & Podcasts</span>
+        <span data-lang="fr">Lecture & Podcasts</span>
+        <span data-lang="es">Lectura y Podcasts</span>
+      </div>
+      <button class="modal-close" onclick="closeAllModals()">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <div class="modal-section-title">
+        <span data-lang="en" class="show">📖 Books</span>
+        <span data-lang="fr">📖 Livres</span>
+        <span data-lang="es">📖 Libros</span>
+      </div>
+      <div class="media-grid">
+        <div class="media-card">
+          <img src="images/东京八平米.png" onerror="this.style.display='none'">
+          <div class="media-info">
+            <div class="media-title">東京八平米 (东京八平米)</div>
+          </div>
+        </div>
+        <div class="media-card">
+          <img src="images/献给阿尔吉侬的花束.png" onerror="this.style.display='none'">
+          <div class="media-info">
+            <div class="media-title">Flowers for Algernon (献给阿尔吉侬的花束)</div>
+          </div>
+        </div>
+        <div class="media-card">
+          <img src="images/西西弗斯神话.png" onerror="this.style.display='none'">
+          <div class="media-info">
+            <div class="media-title">Le Mythe de Sisyphe (西西弗斯神话)</div>
+          </div>
+        </div>
+        <div class="media-card">
+          <img src="images/1984.png" onerror="this.style.display='none'">
+          <div class="media-info">
+            <div class="media-title">1984</div>
+          </div>
+        </div>
+        <div class="media-card">
+          <img src="images/置身事内.png" onerror="this.style.display='none'">
+          <div class="media-info">
+            <div class="media-title">置身事内</div>
+          </div>
+        </div>
+        <div class="media-card">
+          <img src="images/像水一样吧朋友.png" onerror="this.style.display='none'">
+          <div class="media-info">
+            <div class="media-title">Be Water, My Friend (像水一样吧，朋友)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-section-title" style="margin-top:32px;">
+        🎙️ Podcasts
+      </div>
+      <div class="podcast-list">
+        <div class="podcast-item">
+          <img src="images/十字路口 Crossing.png"
+            style="width:48px; height:48px; border-radius:8px; object-fit:cover; flex-shrink:0;">
+          <div class="podcast-info">
+            <div class="podcast-name">十字路口 Crossing</div>
+            <div class="podcast-desc"><span data-lang="en" class="show">Cross-cultural perspectives on China and the
+                world</span><span data-lang="fr">Perspectives transculturelles sur la Chine et le monde</span><span
+                data-lang="es">Perspectivas interculturales sobre China y el mundo</span></div>
+          </div>
+        </div>
+        <div class="podcast-item">
+          <img src="images/独树不成林.png"
+            style="width:48px; height:48px; border-radius:8px; object-fit:cover; flex-shrink:0;">
+          <div class="podcast-info">
+            <div class="podcast-name">独树不成林</div>
+            <div class="podcast-desc"><span data-lang="en" class="show">Literary conversations beyond the
+                mainstream</span><span data-lang="fr">Conversations littéraires hors des sentiers battus</span><span
+                data-lang="es">Conversaciones literarias fuera de lo común</span></div>
+          </div>
+        </div>
+        <div class="podcast-item">
+          <img src="images/张小珺商业访谈录.jpg"
+            style="width:48px; height:48px; border-radius:8px; object-fit:cover; flex-shrink:0;">
+          <div class="podcast-info">
+            <div class="podcast-name">张小珺商业访谈录</div>
+            <div class="podcast-desc"><span data-lang="en" class="show">In-depth business interviews with Chinese
+                entrepreneurs</span><span data-lang="fr">Entretiens approfondis avec des entrepreneurs
+                chinois</span><span data-lang="es">Entrevistas empresariales en profundidad con emprendedores
+                chinos</span></div>
+          </div>
+        </div>
+        <div class="podcast-item">
+          <img src="images/AI&I.png"
+            style="width:48px; height:48px; border-radius:8px; object-fit:cover; flex-shrink:0;">
+          <div class="podcast-info">
+            <div class="podcast-name">AI&I</div>
+            <div class="podcast-desc"><span data-lang="en" class="show">Exploring the intersection of AI and human
+                identity</span><span data-lang="fr">Explorer l'intersection entre l'IA et l'identité humaine</span><span
+                data-lang="es">Explorando la intna</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TRAVEL MODAL -->
+  <div id="modal-travel" class="life-modal">
+    <div class="modal-header">
+      <div class="modal-title">
+        ✈️ <span data-lang="en" class="show">Travel</span>
+        <span data-lang="fr">Voyages</span>
+        <span data-lang="es">Viajes</span>
+      </div>
+      <button class="modal-close" onclick="closeAllModals()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="photo-grid" id="travel-photos">
+        <div class="photo-placeholder">
+          <span data-lang="en" class="show">Photos coming soon — upload to GitHub images/ folder</span>
+          <span data-lang="fr">Photos bientôt disponibles</span>
+          <span data-lang="es">Fotos próximamente</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BYTEDANCE RECOMMENDATION MODAL -->
+  <div id="modal-bytedance-rec" class="life-modal">
+    <div class="modal-header">
+      <div class="modal-title">
+        📄 <span data-lang="en" class="show">Recommendation Letter - ByteDance</span>
+        <span data-lang="fr">Lettre de recommandation - ByteDance</span>
+        <span data-lang="es">Carta de recomendación - ByteDance</span>
+      </div>
+      <button class="modal-close" onclick="closeAllModals()">✕</button>
+    </div>
+    <div class="modal-body" style="padding: 24px; text-align: center; max-height: 80vh; overflow-y: auto;">
+      <a href="images/bytedance1.jpeg" target="_blank" style="display:block; margin-bottom: 16px;">
+        <img src="images/bytedance1.jpeg"
+          style="max-width: 100%; border-radius: 8px; border: 1px solid var(--border); box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+      </a>
+      <p style="font-size: 0.85rem; color: var(--text-muted);">
+        <span data-lang="en" class="show">Click on the image to view in full size</span>
+        <span data-lang="fr">Cliquez sur l'image pour la voir en taille réelle</span>
+        <span data-lang="es">Haz clic en la imagen para verla en tamaño completo</span>
+      </p>
+    </div>
+  </div>
+
+  <!-- ALLIANCE RECOMMENDATION MODAL -->
+  <div id="modal-alliance-rec" class="life-modal">
+    <div class="modal-header">
+      <div class="modal-title">
+        📄 <span data-lang="en" class="show">Recommendation Letters - Alliance Française</span>
+        <span data-lang="fr">Lettres de recommandation - Alliance Française</span>
+        <span data-lang="es">Cartas de recomendación - Alianza Francesa</span>
+      </div>
+      <button class="modal-close" onclick="closeAllModals()">✕</button>
+    </div>
+    <div class="modal-body" style="padding: 24px; text-align: center; max-height: 80vh; overflow-y: auto;">
+      <a href="images/alliancefranciase1.jpeg" target="_blank" style="display:block; margin-bottom: 32px;">
+        <img src="images/alliancefranciase1.jpeg"
+          style="max-width: 100%; border-radius: 8px; border: 1px solid var(--border); box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+      </a>
+      <a href="images/alliancefranciase2.jpeg" target="_blank" style="display:block; margin-bottom: 16px;">
+        <img src="images/alliancefranciase2.jpeg"
+          style="max-width: 100%; border-radius: 8px; border: 1px solid var(--border); box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+      </a>
+      <p style="font-size: 0.85rem; color: var(--text-muted);">
+        <span data-lang="en" class="show">Click on the images to view in full size</span>
+        <span data-lang="fr">Cliquez sur les images pour les voir en taille réelle</span>
+        <span data-lang="es">Haz clic en las imágenes para verlas en tamaño completo</span>
+      </p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>
+      <div class="footer-name">Jiake ZHU (Jack) · 朱佳科</div>
+      <div class="footer-tagline">
+        <span data-lang="en" class="show">Multilingual · Multidisciplinary · Multi-industry</span>
+        <span data-lang="fr">Plurilingue · Pluridisciplinaire · Multi-sectoriel</span>
+        <span data-lang="es">Plurilingüe · Multidisciplinar · Multisectorial</span>
+      </div>
+    </div>
+
+    <div class="footer-links">
+      <a href="/cdn-cgi/l/email-protection#245e4e4f574b484b64424b5c49454d480a474b49" class="footer-link" title="Email">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+          <polyline points="22,6 12,13 2,6" />
+        </svg>
+      </a>
+      <a href="https://www.linkedin.com/in/Jack-zhujiake-career" target="_blank" class="footer-link" title="LinkedIn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+          <rect x="2" y="9" width="4" height="12" />
+          <circle cx="4" cy="4" r="2" />
+        </svg>
+      </a>
+      <a href="https://github.com/jkzhusolo-spec" target="_blank" class="footer-link" title="GitHub">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+        </svg>
+      </a>
+      <a href="https://instagram.com/zhujiake26" target="_blank" class="footer-link" title="Instagram">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+        </svg>
+      </a>
+      <a href="https://x.com/jkzhusolo" target="_blank" class="footer-link" title="X">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+        </svg>
+      </a>
+      <div class="wechat-wrapper">
+        <div class="footer-link" style="cursor:pointer;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-5.972 3.032-7.814 1.832-1.171 4.073-1.461 6.155-.948-.008-4.058-3.914-7.37-8.998-7.37m-1.772 3.678a.988.988 0 1 1 0 1.976.988.988 0 0 1 0-1.976zm4.548 0a.988.988 0 1 1 0 1.976.988.988 0 0 1 0-1.976zM24 14.187c0-3.416-3.43-6.188-7.659-6.188-4.229 0-7.659 2.772-7.659 6.188 0 3.416 3.43 6.188 7.659 6.188.859 0 1.684-.127 2.464-.35a.723.723 0 0 1 .6.083l1.596.933a.274.274 0 0 0 .14.047c.134 0 .24-.11.24-.247 0-.06-.023-.12-.038-.177l-.327-1.233a.503.503 0 0 1 .179-.558C23.076 17.98 24 16.184 24 14.187zm-10.301-.538a.825.825 0 1 1 0-1.651.825.825 0 0 1 0 1.651zm5.283 0a.825.825 0 1 1 0-1.651.825.825 0 0 1 0 1.651z" />
+          </svg>
+        </div>
+        <div class="wechat-tooltip"
+          style="bottom:52px; background:var(--olive-light); color:var(--cream); border-color:transparent;">WeChat:
+          Acoolcopper</div>
+      </div>
+    </div>
+  </footer>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+  <script>
+    // ─── ACTIVE NAV HIGHLIGHT ON SCROLL ───
+    const sections = ['about', 'education', 'experience', 'projects', 'skills', 'life'];
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(link => {
+            link.classList.toggle('active-section', link.getAttribute('href') === '#' + entry.target.id);
+          });
+        }
+      });
+    }, { rootMargin: '-40% 0px -50% 0px' });
+
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) sectionObserver.observe(el);
+    });
+    // ─── MODAL FUNCTIONS ───
+    function openModal(id) {
+      document.getElementById('modal-overlay').classList.add('open');
+      const modal = document.getElementById(id);
+      modal.style.display = 'flex';
+      requestAnimationFrame(() => modal.classList.add('open'));
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeAllModals() {
+      document.getElementById('modal-overlay').classList.remove('open');
+      document.querySelectorAll('.life-modal').forEach(m => {
+        m.classList.remove('open');
+        setTimeout(() => { if (!m.classList.contains('open')) m.style.display = 'none'; }, 250);
+      });
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAllModals(); });
+
+    let currentLang = 'en';
+
+    function setLang(lang) {
+      currentLang = lang;
+      document.querySelectorAll('[data-lang]').forEach(el => {
+        el.classList.toggle('show', el.dataset.lang === lang);
+      });
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        const btnLang = btn.getAttribute('onclick').match(/setLang\('(\w+)'\)/)?.[1];
+        btn.classList.toggle('active', btnLang === lang);
+      });
+      document.documentElement.lang = lang;
+    }
+
+    // ─── SCROLL ANIMATIONS ───
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, i * 60);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.animate-on-scroll').forEach(el => {
+      observer.observe(el);
+    });
+
+    // ─── LANGUAGE BAR FILLS ───
+    const langObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.querySelectorAll('.lang-bar-fill').forEach(bar => {
+            const w = bar.dataset.width;
+            bar.style.width = (parseFloat(w) * 100) + '%';
+            setTimeout(() => bar.classList.add('animate'), 100);
+          });
+        }
+      });
+    }, { threshold: 0.3 });
+
+    const skillsSection = document.getElementById('skills');
+    const aboutSection = document.getElementById('about');
+    [skillsSection, aboutSection].forEach(sec => {
+      if (sec) langObserver.observe(sec);
+    });
+
+  </script>
+</body>
+
+</html>
