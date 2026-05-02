@@ -15,7 +15,7 @@
 
 **[jiakezhu.github.io](https://jiakezhu.github.io)** is the personal portfolio of Jiake ZHU, a professional who combines technical fluency with deep international experience. Educated across China and France — double bachelor's in French Language & Cross-border E-commerce (ZJSU), Master's in International Business (SWUFE), and an exchange year in International & European Law at Paris 1 Panthéon-Sorbonne — Jiake brings a rare blend of coding ability and cross-cultural expertise to every project.
 
-**[jiakezhu.github.io](https://jiakezhu.github.io)** 是朱佳珂的个人作品集网站。他拥有浙江工商大学法语与跨境电商双学位、西南财经大学国际商务硕士学位，并曾赴巴黎第一大学（先贤祠-索邦）交换学习国际与欧盟法。他将技术能力与跨文化国际经验相结合，是连接中西方的复合型人才。
+**[jiakezhu.github.io](https://jiakezhu.github.io)** 是朱佳的科个人作品集网站。他拥有浙江工商大学法语与跨境电商双学位、西南财经大学国际商务硕士学位，并曾赴巴黎第一大学（先贤祠-索邦）交换学习国际与欧盟法。他将技术能力与跨文化国际经验相结合，是连接中西方的复合型人才。
 
 **Languages · 语言能力:** Native Mandarin · IELTS 7.5 English · DALF C1 French · A2–B1 Spanish · 16+ countries visited
 
