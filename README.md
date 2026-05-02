@@ -1,4 +1,4 @@
-# Jiake ZHU · 朱佳珂
+# Jiake ZHU · 朱佳科
 
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-live-brightgreen?logo=github)](https://jiakezhu.github.io)
 [![Status](https://img.shields.io/badge/status-live-success)](https://jiakezhu.github.io)
